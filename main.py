@@ -1,8 +1,23 @@
 import pandas
 from sqlalchemy import create_engine
+from pathlib import Path
 
-#print(file.head())
 
+def create_db():
+    BASE_DIR = Path(__file__).parent
+    DATA_DIR = BASE_DIR / 'data'
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    DB_PATH = DATA_DIR / 'research.db'
+
+    engine = create_engine(f'sqlite:///{DB_PATH}')
+    engine.connect()
+    return engine
+
+def path_to_db():
+    url = create_db().url
+    path = url.database
+    return path
+    
 def load_excel_to_sqlite(
         excel_path,
         db_path='data/research.db',
@@ -20,5 +35,8 @@ def load_excel_to_sqlite(
 
     print(f"Data from {excel_path} written in to table '{table_name}' in {db_path}")
 
-#load_excel_to_sqlite('data/data.xls', 'data/research.db', 'partissipants', False, ['group_type', 'score'])
 
+if __name__ == "__main__":
+    db_engine = create_db()
+    db_path = path_to_db()
+    load_excel_to_sqlite('data/data.xls', db_path, 'partissipants', False, ['group_type', 'score'])
