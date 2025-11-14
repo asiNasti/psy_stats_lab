@@ -1,7 +1,12 @@
 import numpy
 
 from scipy.stats import ttest_ind, ttest_rel
-from scipy.stats import mannwhitneyu, kstest
+from scipy.stats import mannwhitneyu, wilcoxon
+from scipy.stats import chi2_contingency
+from scipy.stats import kstest, shapiro
+from scipy.stats import pearsonr, spearmanr
+
+from statsmodels.stats.contingency_tables import mcnemar
 
 
 tests = [
@@ -79,16 +84,30 @@ def metric_sample(sample, group):
     return test
 
 
+def chi_square_stat_test(group1, group2):
+    return chi2_contingency(group1, group2)
 
-def student_stat_tests(samples, group1, group2):
+def mc_nemar_stat_test(group1, group2):
+    return mcnemar(group1, group2)
+
+def mann_whitneyu_stat_test(group1, group2):
+    return mannwhitneyu(group1, group2)
+
+def wilcoxon_stat_test(group1, group2):
+    return wilcoxon(group1, group2)
+
+def student_stat_test(samples, group1, group2):
     if samples == "unrelated":
         t_stat, p_value = ttest_ind(group1, group2)
     elif samples == "related":
         t_stat, p_value = ttest_rel(group1, group2)
     return (t_stat, p_value)
 
-def mann_whitneyu_stat_tests(group1, group2):
-    return mannwhitneyu(group1, group2)
+def pearson_stat_test(group1, group2):
+    return pearsonr(group1, group2)
+
+def spearman_stat_test(group1, group2):
+    return spearmanr(group1, group2)
 
 def normality_ks(group):
     return kstest(group, 'norm', qrgs=(numpy.mean(group), numpy.std(group)))
@@ -110,5 +129,5 @@ def result():
 if __name__ == "__main__":
     group1 = [20, 22, 19, 20, 21, 25, 22]
     group2 = [28, 26, 30, 27, 29, 25, 27]
-    #student_stat_tests("unrelated", group1, group2)
+    #student_stat_test("unrelated", group1, group2)
     choose_test()
