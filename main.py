@@ -2,6 +2,8 @@ import pandas
 from sqlalchemy import create_engine
 from pathlib import Path
 
+from stat_analysis import make_choise
+
 
 def create_db():
     BASE_DIR = Path(__file__).parent
@@ -40,3 +42,4 @@ if __name__ == "__main__":
     db_engine = create_db()
     db_path = path_to_db()
     load_excel_to_sqlite('data/data.xls', db_path, 'partissipants', False, ['group_type', 'score'])
+    make_choise()
