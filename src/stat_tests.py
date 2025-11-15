@@ -1,19 +1,21 @@
 import numpy
+import pandas
 
-from scipy.stats import ttest_ind, ttest_rel
-from scipy.stats import mannwhitneyu, wilcoxon
-from scipy.stats import chi2_contingency
-from scipy.stats import kstest, shapiro
-from scipy.stats import pearsonr, spearmanr
+from scipy.stats import (ttest_ind, ttest_rel, mannwhitneyu, wilcoxon,
+                         chi2_contingency, kstest, shapiro, pearsonr, spearmanr)
 
 from statsmodels.stats.contingency_tables import mcnemar
 
 
 def chi_square_stat_test(group1, group2):
-    return chi2_contingency(group1, group2)
+    df = pandas.DataFrame({'Var1': group1, 'Var2': group2})
+    table = pandas.crosstab(df['Var1'], df['Var2'])
+    return chi2_contingency(table)
 
 def mc_nemar_stat_test(group1, group2):
-    return mcnemar(group1, group2)
+    df = pandas.DataFrame({'Before': group1, 'After': group2})
+    table = pandas.crosstab(df['Before'], df['After'])
+    return mcnemar(table)
 
 def mann_whitneyu_stat_test(group1, group2):
     return mannwhitneyu(group1, group2)
