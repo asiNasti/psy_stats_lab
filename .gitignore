@@ -3,3 +3,5 @@ stat/
 __pycache__/
 
 data/
+
+sqlite3.exe

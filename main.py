@@ -2,7 +2,7 @@ import pandas
 from sqlalchemy import create_engine
 from pathlib import Path
 
-from stat_analysis import make_choise
+from src.stat_analysis import make_choise
 
 
 def create_db():
