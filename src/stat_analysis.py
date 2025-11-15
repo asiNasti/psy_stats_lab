@@ -1,11 +1,9 @@
 from stat_tests import normality_ks
-
 from user_interface import make_choise
-from src.reporting import result
 
 tests = [
-    "Student's t-test (independent samples)", "Student's t-test (paired samples)", 
-    'Mann Whitney U test', "Wilcoxon test", "Chi-square test", "McNemar test", 
+    "Student's t-test", 'Mann Whitney U test', 
+    "Wilcoxon test", "Chi-square test", "McNemar test", 
     "Kolmogorov Smirnov test", "Shapiro Wilk test", 
     "Pearson correlation", "Spearman correlation"
 ]
@@ -13,7 +11,11 @@ tests = [
 def choose_test():
     answers = make_choise(tests)
     if len(answers) == 1:
-        test = tests[answers-1]
+        return tests[answers-1]
+    elif len(answers) == 2:
+        test_number, type_of_sample = answers
+        return tests[test_number-1], type_of_sample
+     
     else:
         type_of_analysis, type_of_scale, type_of_sample = answers
         if type_of_analysis == 1:
@@ -23,7 +25,7 @@ def choose_test():
                 test = ordinal_sample(type_of_sample)
             if type_of_scale == 3:
                 test = metric_sample(type_of_sample)
-    print(test)
+    return test, type_of_sample
                             
             
 def nominal_sample(sample):

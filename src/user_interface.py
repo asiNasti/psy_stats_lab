@@ -22,7 +22,11 @@ def make_choise(tests):
         menu_lines = [f"{i} - {test_name}" for i, test_name in enumerate(tests, start=1)]
         prompt = "Which statistical test would you like to use?\n" + "\n".join(menu_lines) + "\nchoose number: "
         type_of_test = int(input(prompt))
+        if type_of_test == 1:
+            type_of_sample = int(input("Select sample type:\n" \
+            "1 related\n2 unrelated\n" \
+            "choose number: "))
 
-        return (type_of_test)
+        return (type_of_test, type_of_sample)
     
     return (type_of_analysis, type_of_scale, type_of_sample)
