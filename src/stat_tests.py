@@ -22,10 +22,12 @@ def wilcoxon_stat_test(group1, group2):
     return wilcoxon(group1, group2)
 
 def student_stat_test(samples, group1, group2):
-    if samples == "unrelated":
+    if samples == 2:
         t_stat, p_value = ttest_ind(group1, group2)
-    elif samples == "related":
+    elif samples == 1:
         t_stat, p_value = ttest_rel(group1, group2)
+    else:
+        return (None, None)
     return (t_stat, p_value)
 
 def pearson_stat_test(group1, group2):
@@ -35,4 +37,4 @@ def spearman_stat_test(group1, group2):
     return spearmanr(group1, group2)
 
 def normality_ks(group):
-    return kstest(group, 'norm', qrgs=(numpy.mean(group), numpy.std(group)))
+    return kstest(group, 'norm', args=(numpy.mean(group), numpy.std(group)))

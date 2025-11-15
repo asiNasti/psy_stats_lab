@@ -1,4 +1,4 @@
-def result(func_result):
+def interp_results(func_result):
     statistic, p_value = func_result
     print(f"t statistic: {statistic}")
     print(f"p-value: {p_value}")

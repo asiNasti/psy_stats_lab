@@ -1,5 +1,5 @@
-from stat_tests import normality_ks
-from user_interface import make_choise
+from .stat_tests import normality_ks
+from .user_interface import make_choise
 
 tests = [
     "Student's t-test", 'Mann Whitney U test', 
@@ -8,7 +8,7 @@ tests = [
     "Pearson correlation", "Spearman correlation"
 ]
 
-def choose_test():
+def choose_test(group1, group2):
     answers = make_choise(tests)
     if len(answers) == 1:
         return tests[answers-1]
@@ -24,7 +24,7 @@ def choose_test():
             if type_of_scale == 2:
                 test = ordinal_sample(type_of_sample)
             if type_of_scale == 3:
-                test = metric_sample(type_of_sample)
+                test = metric_sample(type_of_sample, group1, group2)
     return test, type_of_sample
                             
             
@@ -42,8 +42,8 @@ def ordinal_sample(sample):
         test = "Wilcoxon test"
     return test
 
-def metric_sample(sample, group):
-    if normality_ks(group):
+def metric_sample(sample, group1, group2):
+    if normality_ks(group1) and normality_ks(group2):
         test = "Student's t-test"
     else:
         test = ordinal_sample(sample)
@@ -53,4 +53,4 @@ def metric_sample(sample, group):
 
 
 if __name__ == "__main__":
-    choose_test()
+    pass
